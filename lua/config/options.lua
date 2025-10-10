@@ -17,3 +17,6 @@ vim.api.nvim_create_autocmd("FileType", {
 -- Set tab width to 4 spaces
 vim.opt.tabstop = 4 -- Number of visual spaces per TAB
 vim.opt.shiftwidth = 4 -- Number of spaces for indentation
+
+-- Disable animations
+vim.g.snacks_animate = false
