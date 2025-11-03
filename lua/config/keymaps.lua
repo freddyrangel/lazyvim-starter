@@ -81,13 +81,28 @@ do
   end
 
   local function detect_fence()
-    -- Prefer file extension; fall back to filetype
-    local ext = vim.fn.expand("%:e")
-    if ext ~= "" then
-      return ext
-    end
+    -- Prefer Neovim filetype; fall back to extension with a few aliases
     local ft = vim.bo.filetype or ""
-    return ft
+    local ft_alias = {
+      typescriptreact = "tsx",
+      javascriptreact = "jsx",
+      sh = "bash",
+      make = "makefile",
+    }
+    if ft ~= "" then
+      return ft_alias[ft] or ft
+    end
+
+    local ext = (vim.fn.expand("%:e") or ""):lower()
+    local ext_alias = {
+      yml = "yaml",
+      tf = "hcl", -- or "terraform" if you prefer
+    }
+    if ext ~= "" then
+      return ext_alias[ext] or ext
+    end
+
+    return "" -- plaintext
   end
 
   local function rel_to_git_root(abs_path)
