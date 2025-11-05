@@ -29,11 +29,24 @@ return {
     },
     opts = {
       -- default provider; switch to "openai" if desired
-      provider = "openai",
+      provider = "openai", -- default provider e.g. OpenAI
+      providers = {
+        openai = { model = "gpt-5" }, -- normal GPT-5
+        ["openai:thinking"] = { __inherited_from = "openai", model = "gpt-5-thinking" }, -- GPT-5 Thinking
+        claude = { model = "claude-sonnet-4-5" },
+      },
 
       -- use LazyVim's defaults: fzf-lua selector, snacks input
-      selector = { provider = "fzf_lua" },
+      selector = { provider = "telescope" },
       input = { provider = "snacks" },
+
+      behaviour = {
+        auto_approve_tool_permissions = false, -- require confirmation
+        auto_apply_diff_after_generation = false, -- review diffs first
+        minimize_diff = true,
+        -- optional: use a modal dialog instead of inline buttons
+        -- confirmation_ui_style = "popup",
+      },
 
       windows = {
         position = "right",
